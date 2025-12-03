@@ -1,7 +1,4 @@
 Project Structure
-FliptRx/
-├── claims.json                 # Claims data
-├── backend.py                  # Backend code for processing claims and analyzing queries
-├── frontend.py                 # Frontend code for interactive UI
-├── README.md                   # Project documentation
+<img width="763" height="137" alt="image" src="https://github.com/user-attachments/assets/353d72b2-2bd3-479c-a851-1c2e66ec6ca0" />
+
 
