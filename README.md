@@ -1,1 +1,7 @@
-Building an AI Agent for a Pharmacy Benefits manager that can identify claims as Paid, Rejected or Duplicate. If rejected, it should be able to tell the denial reason and how to go about fixing it. 
+Project Structure
+FliptRx/
+├── claims.json                 # Claims data
+├── backend.py                  # Backend code for processing claims and analyzing queries
+├── frontend.py                 # Frontend code for interactive UI
+├── README.md                   # Project documentation
+
