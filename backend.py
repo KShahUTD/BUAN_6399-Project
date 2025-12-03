@@ -1,4 +1,4 @@
-!pip install -q ipywidgets sentence-transformers google-genai numpy
+#Backend#
 # ---Imports & setup ---
 import os
 import json
@@ -13,7 +13,7 @@ from google.colab import drive
 
 # ---Mount Drive & configure credentials ---
 drive.mount('/content/drive', force_remount=True)
-SERVICE_ACCOUNT_PATH = "/content/drive/My Drive/my_service_account.json"  # Replace with your service_account
+SERVICE_ACCOUNT_PATH = "/content/drive/My Drive/my_service_account_path.json" # Replace with the path to your service account
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = SERVICE_ACCOUNT_PATH
 os.environ["GOOGLE_CLOUD_PROJECT"] = "my_project_id"  # Replace with your project id
 os.environ["GOOGLE_CLOUD_LOCATION"] = "global"
@@ -25,7 +25,7 @@ client = genai.Client(
     location=os.environ["GOOGLE_CLOUD_LOCATION"]
 )
 # ---Load claims data ---
-CLAIMS_JSON_PATH = "/content/drive/My Drive/claims.json"
+CLAIMS_JSON_PATH = "/content/drive/My Drive/FliptRx/claims.json"
 with open(CLAIMS_JSON_PATH, "r") as f:
     claims_data = json.load(f)
 
@@ -156,51 +156,44 @@ def analyze_input(user_input: str) -> str:
     return _sanitize(response.text)
 
 
-import ipywidgets as widgets
-from IPython.display import display, HTML
-
+# Frontend# 
 #---Chat Interface---
 import ipywidgets as widgets
 from IPython.display import display, HTML
 
-def setup_ui():
-    # Title for the chat interface
-    title = widgets.HTML(value="<h2>FliptRx AI Lead Mentor</h2>")
+# Title for the chat interface
+title = widgets.HTML(value="<h2>FliptRx Configuration Lead AI Mentor</h2>")
 
-    # Input field for claim description or question
-    input_box = widgets.Textarea(
-        value="",
-        placeholder="What can I assist you with today?",
-        description="Input:",
-        layout={'width': '100%', 'height': '120px'}
-    )
-    
-    # Button to trigger analysis
-    button = widgets.Button(description="Ask")
-    
-    # Output widget for displaying the chat messages
-    output = widgets.Output()
+# Input field for claim description or question with adjusted size
+input_box = widgets.Textarea(
+    value="",
+    placeholder="What can I assist you with today?",
+    description="Input:",
+    layout=widgets.Layout(width='30%', height='300px')
+)
 
-    # When the button is clicked, analyze input
-    def on_click(_):
-        with output:
-            output.clear_output()
-            text = input_box.value.strip()
-            if not text:
-                print("Please type your question here.")
-                return
-            try:
-                resp = analyze_input(text)
-                print(resp)
-            except Exception as e:
-                print("Error:", e)
+# Button to trigger analysis
+button = widgets.Button(description="Ask")
 
-    button.on_click(on_click)
+# Output widget for displaying the chat messages
+output = widgets.Output()
 
-    # Create the layout with title, input box, button, and output container
-    ui_layout = widgets.VBox([title, input_box, button, output])
-    
-    # Display the UI
-    display(ui_layout)
+# When the button is clicked, analyze input
+def on_click(_):
+    with output:
+        output.clear_output()
+        text = input_box.value.strip()
+        if not text:
+            print("Please type your question here.")
+            return
+        try:
+            resp = analyze_input(text)
+            print(resp)
+        except Exception as e:
+            print("Error:", e)
 
-setup_ui()
+button.on_click(on_click)
+
+# Create the layout with title, input box, button, and output container
+ui_layout = widgets.VBox([title, input_box, button, output])
+
